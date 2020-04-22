@@ -1,0 +1,18 @@
+<server description="JAXWS Web Sample Server">
+    <featureManager>
+        <feature>jsp-2.3</feature>
+        <feature>jaxws-2.2</feature>        
+        <feature>localConnector-1.0</feature>
+        <feature>jsf-2.2</feature>
+    </featureManager>
+    
+    <httpEndpoint id="defaultHttpEndpoint" httpPort="9085" httpsPort="9445" />
+
+    <application id="HelloIF" context-root="/HelloRPCAttachment/services" location="HelloIF.war" name="HelloIF" type="war"/>
+
+    <logging  traceSpecification="com.ibm.ws.jaxws.*=all:org.apache.cxf.*=all"
+            traceFileName="trace.log"
+            maxFileSize="20"
+            maxFiles="10"
+            traceFormat="BASIC" />
+</server>

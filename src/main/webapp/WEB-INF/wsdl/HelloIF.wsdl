@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://hello" xmlns:impl="http://hello" xmlns:intf="http://hello" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsi="http://ws-i.org/profiles/basic/1.1/xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+ <wsdl:types>
+  <schema targetNamespace="http://hello" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <element name="sayHelloResponse">
+    <complexType>
+     <sequence>
+      <element name="image" type="xsd:hexBinary"/>/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="sayHello">
+    <complexType>
+     <sequence>
+      <element name="s" nillable="true" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="sayHelloResponse">
+     <wsdl:part element="impl:sayHelloResponse" name="parameters">
+    </wsdl:part>
+    <mime:multipartRelated>
+          <mime:part>
+            <soap:body use="literal"/>
+          </mime:part>
+          <mime:part>
+            <mime:content part="image" type="image/jpeg"/>
+          </mime:part>
+        </mime:multipartRelated>
+
+  </wsdl:message>
+
+   <wsdl:message name="sayHelloRequest">
+     <wsdl:part element="impl:sayHello" name="parameters">
+    </wsdl:part>
+
+  </wsdl:message>
+
+   <wsdl:portType name="HelloIF">
+     <wsdl:operation name="sayHello">
+       <wsdl:input message="impl:sayHelloRequest" name="sayHelloRequest">
+    </wsdl:input>
+
+       <wsdl:output message="impl:sayHelloResponse" name="sayHelloResponse">
+    </wsdl:output>
+
+    </wsdl:operation>
+
+  </wsdl:portType>
+
+   <wsdl:binding name="HelloIFBindingSoapBinding" type="impl:HelloIF">
+ <wsaw:UsingAddressing wsdl:required="false" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl"/>
+
+     <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+     <wsdl:operation name="sayHello">
+       <wsdlsoap:operation soapAction=""/>
+
+       <wsdl:input name="sayHelloRequest">
+         <wsdlsoap:body use="literal"/>
+
+      </wsdl:input>
+
+       <wsdl:output name="sayHelloResponse">
+         <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+
+    </wsdl:operation>
+
+  </wsdl:binding>
+
+   <wsdl:service name="HelloIF">
+     <wsdl:port binding="impl:HelloIFBindingSoapBinding" name="HelloIF">
+       <wsdlsoap:address location="http://localhost:9085/HelloRPCAttachment/services/HelloIF"/>
+
+    </wsdl:port>
+
+  </wsdl:service>
+
+</wsdl:definitions>

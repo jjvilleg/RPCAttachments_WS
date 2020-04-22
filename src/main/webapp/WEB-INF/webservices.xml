@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?><webservices version="1.3" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/javaee_web_services_1_3.xsd">
+    <webservice-description>
+        <webservice-description-name>HelloIF</webservice-description-name>
+        <wsdl-file>WEB-INF/wsdl/HelloIF.wsdl</wsdl-file>
+        <jaxrpc-mapping-file>WEB-INF/HelloIF_mapping.xml</jaxrpc-mapping-file>
+        <port-component>
+            <port-component-name>HelloIF</port-component-name>
+            <wsdl-port xmlns:pfx="http://hello">pfx:HelloIF</wsdl-port>
+            <service-endpoint-interface>hello.HelloIF_PortType</service-endpoint-interface>
+            <service-impl-bean>
+                <servlet-link>hello_HelloIF</servlet-link>
+            </service-impl-bean>
+        </port-component>
+    </webservice-description>
+</webservices>
