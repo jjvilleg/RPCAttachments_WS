@@ -12,11 +12,13 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 //manually
 import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
+import javax.xml.bind.annotation.XmlAttachmentRef;
+import javax.activation.DataHandler;
+// import java.awt.image.BufferedImage;
+// import java.io.ByteArrayOutputStream;
+// import java.io.IOException;
 
-import javax.imageio.ImageIO;
+// import javax.imageio.ImageIO;
 
 /**
  * <p>Java class for anonymous complex type.
@@ -45,9 +47,12 @@ import javax.imageio.ImageIO;
 public class SayHelloResponse {
 
     @XmlElement(required = true, type = String.class)
-    //@XmlJavaTypeAdapter(HexBinaryAdapter.class)
-    //@XmlSchemaType(name = "hexBinary")
-    protected Image image;
+    @XmlAttachmentRef
+    @XmlJavaTypeAdapter(HexBinaryAdapter.class)
+    @XmlSchemaType(name = "hexBinary")
+    //@javax.xml.bind.annotation.XmlMimeType("image/png")
+    //protected Image image;
+    protected DataHandler image;
 
     /**
      * Gets the value of the image property.
@@ -57,7 +62,7 @@ public class SayHelloResponse {
      *     {@link String }
      *     
      */
-     public Image getImage() {
+     public DataHandler getImage() {
         return image;
     }
 
@@ -69,7 +74,7 @@ public class SayHelloResponse {
      *     {@link String }
      *     
      */
-    public void setImage(Image value) {
+    public void setImage(DataHandler value) {
         this.image = value;
     }
 

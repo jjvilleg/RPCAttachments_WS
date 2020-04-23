@@ -2,19 +2,25 @@
 package hello;
 
 import javax.jws.WebService;
+import javax.xml.crypto.Data;
 import javax.xml.ws.BindingType;
 
 //Had to do this manually 
+import javax.xml.ws.soap.MTOM;
+
 import java.awt.Image;
 import java.io.InputStream;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+
 
 //Test
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+
+import javax.activation.DataHandler;
 
 import javax.imageio.ImageIO;
 
@@ -26,6 +32,7 @@ import javax.imageio.ImageIO;
  */
 @WebService(portName = "HelloIF", serviceName = "HelloIF", targetNamespace = "http://hello", wsdlLocation = "WEB-INF/wsdl/HelloIF.wsdl", endpointInterface = "hello.HelloIF")
 @BindingType("http://schemas.xmlsoap.org/wsdl/soap/http")
+//@MTOM
 public class HelloIFImpl
     implements HelloIF
 {
@@ -40,12 +47,13 @@ public class HelloIFImpl
      * @return
      *     returns byte[]
      */
-    //public Image sayHello(String s) {
-    public java.awt.Image sayHello(String s) {
+    public DataHandler sayHello(String s) {
         Image image = null;
+        InputStream inputStream = null;
     	try {
     		System.out.println("Image path requested by client: " + s);
-    		InputStream inputStream = getClass().getResourceAsStream(s);
+            //InputStream inputStream = getClass().getResourceAsStream(s);
+            inputStream = getClass().getResourceAsStream(s);
     	    
     	    if(inputStream == null) {
     	    	
@@ -58,7 +66,7 @@ public class HelloIFImpl
     	    ex.printStackTrace();
         }
         
-        return image;
+        //return image;
 
         // BufferedImage temp = (BufferedImage) image;
         // ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -68,7 +76,9 @@ public class HelloIFImpl
 		// } catch (IOException e) {
 		// 	e.printStackTrace();
         // }
-        // return bos.toByteArray();
+        //return bos.toByteArray();
+        DataHandler dataHandler = new DataHandler(new InputStreamDataSource(inputStream));
+        return dataHandler;
     }
 
 }
